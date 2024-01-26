@@ -15,14 +15,17 @@ public interface ItemRepo extends JpaRepository<Item, Long> {
 
     //JOIN?
 
-    @Query(value = "SELECT * FROM item WHERE category = :category", nativeQuery = true)
-    List<Item> filterItemsByCategory(@Param("category") String category);
+    @Query(value = "SELECT * FROM item WHERE category_id = :category_id", nativeQuery = true)
+    List<Item> filterItemsByCategory(@Param("category_id") Long category_id);
 
-    @Query(value = "SELECT COUNT(*) AS 'count', category AS 'category' FROM item GROUP BY category ORDER BY category ASC;", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) AS 'count', category_id AS 'category' FROM item GROUP BY category_id ORDER BY category_id ASC;", nativeQuery = true)
     List<CategoryGrouped> groupByCategory();
 
     @Query(value = "SELECT SUM(price) AS 'price', category FROM item GROUP BY category ORDER BY category ASC;", nativeQuery = true)
     List<CategoryPriceSum> groupedByPriceSumsByCategory();
+
+    @Query(value = "SELECT * FROM item WHERE container_id = :containerID", nativeQuery = true)
+    List<Item> getItemsFromContainer(@Param("containerID") Long containerID);
 
 
 

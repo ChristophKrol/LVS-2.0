@@ -54,17 +54,17 @@ public class ServerResource {
     }
 
 
-  // @GetMapping("/item/{category}")
-  // public ResponseEntity<Response> getItemsByCategory(@PathVariable("category")int category){
-  //     return ResponseEntity.ok(
-  //             Response.builder().timestamp(LocalDateTime.now())
-  //                     .data(Map.of("items", itemService.listByCategory(category)))
-  //                     .message("Items of chosen category retrieved")
-  //                     .status(OK)
-  //                     .statusCode(OK.value())
-  //                     .build()
-  //     );
-  // }
+  @GetMapping("/item/{category}")
+  public ResponseEntity<Response> getItemsByCategory(@PathVariable("category")Long category_id){
+      return ResponseEntity.ok(
+              Response.builder().timestamp(LocalDateTime.now())
+                      .data(Map.of("items", itemService.listByCategory(category_id)))
+                      .message("Items of chosen category retrieved")
+                      .status(OK)
+                      .statusCode(OK.value())
+                      .build()
+      );
+  }
 
     @GetMapping("/item/test")
     public ResponseEntity<Response> testestetstesttetst(){
@@ -107,6 +107,18 @@ public class ServerResource {
         );
     }
 
+    @GetMapping("/item/getFromContainer/{containerID}")
+    public ResponseEntity<Response> getItemFromContainer(@PathVariable("containerID") Long id){
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of("items", itemService.getFromContainer(id)))
+                        .message("Items retrieved from Container " + id)
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
     /**
      * Baue das Response-Objekt fuer Post-Request: Item speichern
      * @param item zu speicherndes Item
@@ -125,19 +137,19 @@ public class ServerResource {
         );
     }
 
-    @PostMapping ("container/{id}/addItem")
-    public ResponseEntity<Response> addItemToContainer(@PathVariable("id") Long containerID, @RequestBody Item item){
-        return ResponseEntity.ok(
-                Response.builder()
-                        .timestamp(LocalDateTime.now())
-                        .data(Map.of("container", itemService.create(item)))
-                        .message("Item created in Container: " + containerID)
-                        .status(CREATED)
-                        .statusCode(CREATED.value())
-                        .build()
+//   @PostMapping ("container/{id}/addItem")
+//   public ResponseEntity<Response> addItemToContainer(@PathVariable("id") Long containerID, @RequestBody Item item){
+//       return ResponseEntity.ok(
+//               Response.builder()
+//                       .timestamp(LocalDateTime.now())
+//                       .data(Map.of("container", itemService.create(item)))
+//                       .message("Item created in Container: " + containerID)
+//                       .status(CREATED)
+//                       .statusCode(CREATED.value())
+//                       .build()
 
-        );
-    }
+//       );
+//   }
 
     /**
      * Baue das Response-Objekt für Delete-Request: Item loeschen
@@ -190,6 +202,18 @@ public class ServerResource {
                 Response.builder().timestamp(LocalDateTime.now())
                         .data(Map.of("items", containerService.list(30)))
                         .message("Containers retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("/container/get/{id}")
+    public ResponseEntity<Response> getContainer(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of("items", containerService.get(id)))
+                        .message("Container retrieved")
                         .status(OK)
                         .statusCode(OK.value())
                         .build()

@@ -10,7 +10,7 @@ import java.util.List;
 public interface ItemService {
     Item create(Item item);
     Collection<Item> list(int limit);
-    Collection<Item> listByCategory(String categoryName);
+    Collection<Item> listByCategory(Long categoryID);
     Item get(Long id);
     Item update(Item item);
     Boolean delete(Long id);

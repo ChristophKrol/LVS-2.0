@@ -33,26 +33,41 @@ public class ItemServiceImpl implements ItemService {
     /**
      * Erstellt neue Items
      * @param item Item, das erstellt werden soll
-     * @return Rckmeldung ueber erstelltes Item
+     * @return Rueckmeldung ueber erstelltes Item
      */
     @Override
     public Item create(Item item) {
         log.info("Saving new item: {}", item.getName());
         //item.setImageUrl(item.getCategory().getImageUrl()); //Set Image of items category
-        if (item.getContainer().getCurCapacity() + item.getSpace() < item.getContainer().getMaxCapacity()){
-            Optional<ItemContainer> storingContainer = containerRepo.findById(item.getContainer().getId());
+        // Nimm immer direkt aus Datenbank und überprüfe
+        Optional<ItemContainer> storingContainer = containerRepo.findById(item.getContainer().getId());
+        if (storingContainer.get().getCurCapacity() + item.getSpace() < storingContainer.get().getMaxCapacity()){
+
             storingContainer.get().setCurCapacity(storingContainer.get().getCurCapacity() + item.getSpace());
             containerRepo.save(storingContainer.get());
             return itemRepo.save(item);
+
         }
         else {
-            try {
-                throw new NoSpaceAvailableException(item.getContainer().getId());
-            } catch (NoSpaceAvailableException e) {
-                log.info(e.getMessage());
-                return null;
-            }
+            throw new NoSpaceAvailableException(item.getContainer().getId());
         }
+    }
+
+    /**
+     * Loescht Item
+     * @param id ID des zu loeschenden Items
+     * @return Response
+     */
+    @Override
+    public Boolean delete(Long id) {
+        log.info("Deleting item by ID: {}", id);
+        Item itemToDelete = itemRepo.findById(id).get();
+        ItemContainer storingContainer = containerRepo.findById(itemToDelete.getContainer().getId()).get();
+        // Platz freimachen im Container
+        storingContainer.setCurCapacity(storingContainer.getCurCapacity() - itemToDelete.getSpace());
+        containerRepo.save(storingContainer);
+        itemRepo.deleteById(id);
+        return Boolean.TRUE;
     }
 
 
@@ -70,9 +85,14 @@ public class ItemServiceImpl implements ItemService {
 
 
     @Override
-    public Collection<Item> listByCategory(String category) {
+    public Collection<Item> listByCategory(Long category_id) {
         log.info("Fetching all items by Category");
-        return itemRepo.filterItemsByCategory(category).stream().toList();
+        return itemRepo.filterItemsByCategory(category_id).stream().toList();
+    }
+
+    public Collection<Item> getFromContainer(Long containerID){
+        log.info("Fetching all items from container " + containerID);
+        return itemRepo.getItemsFromContainer(containerID).stream().toList();
     }
 
     /**
@@ -97,16 +117,6 @@ public class ItemServiceImpl implements ItemService {
         return itemRepo.save(item);
     }
 
-    /**
-     * Loescht Item
-     * @param id ID des zu loeschenden Items
-     * @return Response
-     */
-    @Override
-    public Boolean delete(Long id) {
-        log.info("Deleting item by ID: {}", id);
-        itemRepo.deleteById(id);
-        return Boolean.TRUE;
-    }
+
 
 }
