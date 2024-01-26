@@ -1,6 +1,6 @@
 spring:
   datasource:
-    password: Admin
+    password: Administrator
     url: jdbc:mysql://localhost:3306/itemdb
     username: root
   jpa:

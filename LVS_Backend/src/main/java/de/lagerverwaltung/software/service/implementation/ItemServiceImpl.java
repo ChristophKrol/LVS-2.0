@@ -3,6 +3,7 @@ package de.lagerverwaltung.software.service.implementation;
 import de.lagerverwaltung.software.exception.NoSpaceAvailableException;
 import de.lagerverwaltung.software.model.Item;
 import de.lagerverwaltung.software.model.ItemCategory;
+import de.lagerverwaltung.software.model.ItemContainer;
 import de.lagerverwaltung.software.repository.ContainerRepo;
 import de.lagerverwaltung.software.repository.ItemRepo;
 import de.lagerverwaltung.software.service.ItemService;
@@ -39,7 +40,9 @@ public class ItemServiceImpl implements ItemService {
         log.info("Saving new item: {}", item.getName());
         //item.setImageUrl(item.getCategory().getImageUrl()); //Set Image of items category
         if (item.getContainer().getCurCapacity() + item.getSpace() < item.getContainer().getMaxCapacity()){
-            containerRepo.addCapacity(item.getSpace(), Optional.ofNullable(item.getContainer().getId()));
+            Optional<ItemContainer> storingContainer = containerRepo.findById(item.getContainer().getId());
+            storingContainer.get().setCurCapacity(storingContainer.get().getCurCapacity() + item.getSpace());
+            containerRepo.save(storingContainer.get());
             return itemRepo.save(item);
         }
         else {

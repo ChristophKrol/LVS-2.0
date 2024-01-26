@@ -183,4 +183,18 @@ public class ServerResource {
                         .build()
         );
     }
+
+    @GetMapping("/container/list")
+    public ResponseEntity<Response> getContainers(){
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of("items", containerService.list(30)))
+                        .message("Containers retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+
 }

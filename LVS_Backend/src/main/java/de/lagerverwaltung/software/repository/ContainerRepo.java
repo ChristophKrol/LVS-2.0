@@ -11,6 +11,7 @@ import java.util.OptionalLong;
 
 public interface ContainerRepo extends JpaRepository<ItemContainer, Long> {
 
+    /*
     @Modifying
     @Query(value = "UPDATE container SET cur_capacity = cur_capacity - :item_capacity WHERE id = :containerID", nativeQuery = true)
     void subtractCapacity(@Param("itemCapacity") int itemCapacity, @Param("containerID") Optional<Long> containerID);
@@ -18,4 +19,8 @@ public interface ContainerRepo extends JpaRepository<ItemContainer, Long> {
     @Modifying
     @Query(value = "UPDATE container SET cur_capacity = cur_capacity + :item_capacity WHERE id = :containerID", nativeQuery = true)
     void addCapacity(@Param("itemCapacity") int itemCapacity, @Param("containerID") Optional<Long> containerID);
+
+
+     */
+
 }

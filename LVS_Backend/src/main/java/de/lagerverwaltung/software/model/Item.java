@@ -21,7 +21,7 @@ public class Item {
     private double price;
     private int space;
     @ManyToOne
-    @JoinColumn(nullable = false, name = "category_id")
+    @JoinColumn(nullable = true, name = "category_id")
     private ItemCategory category;
 
     @ManyToOne()
