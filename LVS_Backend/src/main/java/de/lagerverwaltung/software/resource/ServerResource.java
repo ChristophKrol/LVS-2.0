@@ -2,6 +2,7 @@ package de.lagerverwaltung.software.resource;
 
 
 import de.lagerverwaltung.software.model.Item;
+import de.lagerverwaltung.software.model.ItemCategory;
 import de.lagerverwaltung.software.model.ItemContainer;
 import de.lagerverwaltung.software.model.Response;
 import de.lagerverwaltung.software.repository.CategoryRepo;
@@ -54,7 +55,7 @@ public class ServerResource {
     }
 
 
-  @GetMapping("/item/{category}")
+  @GetMapping("/item/get/category/{category}")
   public ResponseEntity<Response> getItemsByCategory(@PathVariable("category")Long category_id){
       return ResponseEntity.ok(
               Response.builder().timestamp(LocalDateTime.now())
@@ -107,7 +108,7 @@ public class ServerResource {
         );
     }
 
-    @GetMapping("/item/getFromContainer/{containerID}")
+    @GetMapping("/item/get/container/{containerID}")
     public ResponseEntity<Response> getItemFromContainer(@PathVariable("containerID") Long id){
         return ResponseEntity.ok(
                 Response.builder().timestamp(LocalDateTime.now())
@@ -118,6 +119,20 @@ public class ServerResource {
                         .build()
         );
     }
+
+    @GetMapping("/item/get/container/{containerID}/category/{categoryID}")
+    public ResponseEntity<Response> getItemFromContainerGroupByCategory(@PathVariable("containerID") Long id, @PathVariable("categoryID") long cat_id){
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of("items", itemService.getFromContainerGroupByCategory(id, cat_id)))
+                        .message("Items retrieved from Container " + id)
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+
 
     /**
      * Baue das Response-Objekt fuer Post-Request: Item speichern
@@ -219,6 +234,58 @@ public class ServerResource {
                         .build()
         );
     }
+
+    @DeleteMapping("/container/delete/{id}")
+    public ResponseEntity<Response> deleteContainer(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of("deleted", containerService.delete(id)))
+                        .message("Item deleted")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @PostMapping("/category/save")
+    public ResponseEntity<Response> saveCategory(@RequestBody ItemCategory category) {
+        return ResponseEntity.ok(
+                Response.builder()
+                        .timestamp(LocalDateTime.now())
+                        .data(Map.of("category", categoryService.create(category)))
+                        .message("Category created")
+                        .status(CREATED)
+                        .statusCode(CREATED.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("/category/get/{name}")
+    public ResponseEntity<Response> getCategory(@PathVariable("name") String categoryName) {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of("categories", categoryService.get(categoryName)))
+                        .message("Category retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("/category/list")
+    public ResponseEntity<Response> getCategories(){
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of("categories", categoryService.list(30)))
+                        .message("Categories retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+
+
 
 
 }

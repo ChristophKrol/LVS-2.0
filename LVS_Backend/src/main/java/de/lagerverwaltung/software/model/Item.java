@@ -1,5 +1,6 @@
 package de.lagerverwaltung.software.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import de.lagerverwaltung.software.enumeration.Category;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "item")
+@JsonIgnoreProperties({"category", "container"}) // Wird benötigt, damit bei SELECT * FROM ITEM WHERE category_id = X keine Fehler kommen
+
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,11 +23,11 @@ public class Item {
     private String name;
     private double price;
     private int space;
-    @ManyToOne
-    @JoinColumn(nullable = true, name = "category_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "category_id")
     private ItemCategory category;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "container_id")
     private ItemContainer container;
 }

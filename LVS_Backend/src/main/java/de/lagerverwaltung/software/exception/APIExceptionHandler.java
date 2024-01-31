@@ -23,4 +23,19 @@ public class APIExceptionHandler {
 
         return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
     }
+
+
+    @ExceptionHandler(value = {ContainerNotEmptyException.class})
+    public ResponseEntity<Object> handleContainerNotEmptyException(ContainerNotEmptyException cnee){
+        //1. Create payload containing esception details
+        ApiException apiException = new ApiException(
+                cnee.getMessage(),
+                cnee,
+                HttpStatus.BAD_REQUEST,
+                LocalDateTime.now()
+        );
+        //2. Resturn ResponseEntity
+
+        return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
+    }
 }

@@ -27,6 +27,12 @@ public interface ItemRepo extends JpaRepository<Item, Long> {
     @Query(value = "SELECT * FROM item WHERE container_id = :containerID", nativeQuery = true)
     List<Item> getItemsFromContainer(@Param("containerID") Long containerID);
 
+    @Query(value = "SELECT * FROM item WHERE container_id = :containerID AND category_id = :categoryID", nativeQuery = true )
+    List<Item> getItemsFromContainerGroupByCategory(@Param("containerID") Long containerID, @Param("categoryID") Long categoryID);
+
+    @Query(value = "SELECT SUM(price) AS 'price' FROM item", nativeQuery = true)
+    double calculateItemValue();
+
 
 
     public static interface CategoryGrouped {

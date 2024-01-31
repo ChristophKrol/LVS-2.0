@@ -1,5 +1,7 @@
 package de.lagerverwaltung.software.service.implementation;
 
+import de.lagerverwaltung.software.exception.ContainerNotEmptyException;
+import de.lagerverwaltung.software.model.Item;
 import de.lagerverwaltung.software.model.ItemContainer;
 import de.lagerverwaltung.software.repository.ContainerRepo;
 import de.lagerverwaltung.software.service.ItemContainerService;
@@ -17,6 +19,7 @@ import java.util.Collection;
 @Slf4j
 public class ItemContainerImpl implements ItemContainerService {
     private final ContainerRepo containerRepo;
+    private final ItemServiceImpl itemService;
     @Override
     public ItemContainer create(ItemContainer container) {
         log.info("Saving new Container: {}", container.getName());
@@ -44,8 +47,17 @@ public class ItemContainerImpl implements ItemContainerService {
 
     @Override
     public Boolean delete(Long id) {
-        log.info("Deleting container by ID: {}", id);
-        containerRepo.deleteById(id);
-        return Boolean.TRUE;
+        Collection<Item> containerItems = itemService.getFromContainer(id);
+        log.info("Empty? " + containerItems.isEmpty());
+        if (containerItems.isEmpty()){
+            log.info("Deleting container by ID: {}", id);
+            containerRepo.deleteById(id);
+            return Boolean.TRUE;
+        }
+        else {
+            throw new ContainerNotEmptyException(id);
+        }
+
+
     }
 }

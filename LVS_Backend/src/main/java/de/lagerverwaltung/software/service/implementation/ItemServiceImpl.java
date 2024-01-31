@@ -95,6 +95,11 @@ public class ItemServiceImpl implements ItemService {
         return itemRepo.getItemsFromContainer(containerID).stream().toList();
     }
 
+    public Collection<Item> getFromContainerGroupByCategory(Long containerID, Long categoryID){
+        log.info("Fetching all items by category from container " + containerID);
+        return itemRepo.getItemsFromContainerGroupByCategory(containerID, categoryID).stream().toList();
+    }
+
     /**
      * Gibt ein ausgewaehltes Item zurück
      * @param id ID des Items
@@ -116,6 +121,13 @@ public class ItemServiceImpl implements ItemService {
         log.info("Updating item: {}", item.getName());
         return itemRepo.save(item);
     }
+
+
+    /**
+     * KPI-Services
+     */
+
+    
 
 
 
