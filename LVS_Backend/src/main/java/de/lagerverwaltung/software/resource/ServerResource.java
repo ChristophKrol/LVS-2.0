@@ -284,6 +284,21 @@ public class ServerResource {
         );
     }
 
+    /**
+     * KPI-Requests
+     */
+    @GetMapping("/item/totalValue")
+    public ResponseEntity<Response> getTotalItemValue(){
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of("itemValue", itemService.calculateItemValue()))
+                        .message("Total Item Value retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
 
 
 

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "item")
-@JsonIgnoreProperties({"category", "container"}) // Wird benötigt, damit bei SELECT * FROM ITEM WHERE category_id = X keine Fehler kommen
+//@JsonIgnoreProperties({"category", "container"}) // Wird benötigt, damit bei SELECT * FROM ITEM WHERE category_id = X keine Fehler kommen
 
 public class Item {
     @Id

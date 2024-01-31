@@ -47,7 +47,7 @@ public class ItemContainerImpl implements ItemContainerService {
 
     @Override
     public Boolean delete(Long id) {
-        Collection<Item> containerItems = itemService.getFromContainer(id);
+        Collection<Item> containerItems = itemService.getItemFromContainer(id);
         log.info("Empty? " + containerItems.isEmpty());
         if (containerItems.isEmpty()){
             log.info("Deleting container by ID: {}", id);

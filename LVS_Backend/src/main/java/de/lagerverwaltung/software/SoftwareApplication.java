@@ -1,5 +1,6 @@
 package de.lagerverwaltung.software;
 
+import de.lagerverwaltung.software.dto.ItemDTOMapper;
 import de.lagerverwaltung.software.enumeration.Category;
 import de.lagerverwaltung.software.model.Item;
 import de.lagerverwaltung.software.repository.ItemRepo;
@@ -38,6 +39,11 @@ public class SoftwareApplication {
 		corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
 		urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 		return new CorsFilter(urlBasedCorsConfigurationSource);
+	}
+
+	@Bean
+	public ItemDTOMapper itemDTOMapper(){
+		return new ItemDTOMapper();
 	}
 
 }

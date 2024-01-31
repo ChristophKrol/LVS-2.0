@@ -1,5 +1,7 @@
 package de.lagerverwaltung.software.service.implementation;
 
+import de.lagerverwaltung.software.dto.ItemDTO;
+import de.lagerverwaltung.software.dto.ItemDTOMapper;
 import de.lagerverwaltung.software.exception.NoSpaceAvailableException;
 import de.lagerverwaltung.software.model.Item;
 import de.lagerverwaltung.software.model.ItemCategory;
@@ -29,6 +31,7 @@ import java.util.Optional;
 public class ItemServiceImpl implements ItemService {
     private final ItemRepo itemRepo;
     private final ContainerRepo containerRepo;
+    private final ItemDTOMapper itemDTOMapper;
 
     /**
      * Erstellt neue Items
@@ -77,27 +80,35 @@ public class ItemServiceImpl implements ItemService {
      * @return Liste der Items
      */
     @Override
-    public Collection<Item> list(int limit) {
+    public Collection<ItemDTO> list(int limit) {
         log.info("Fetching all items");
-        return itemRepo.findAll(PageRequest.of(0, limit)).toList();
+        return itemRepo.findAll(PageRequest.of(0, limit))
+                .stream()
+                .map(itemDTOMapper)
+                .toList();
     }
 
 
 
     @Override
-    public Collection<Item> listByCategory(Long category_id) {
+    public Collection<ItemDTO> listByCategory(Long category_id) {
         log.info("Fetching all items by Category");
-        return itemRepo.filterItemsByCategory(category_id).stream().toList();
+        return itemRepo.filterItemsByCategory(category_id).stream().map(itemDTOMapper).toList();
     }
 
-    public Collection<Item> getFromContainer(Long containerID){
+    public Collection<ItemDTO> getFromContainer(Long containerID){
         log.info("Fetching all items from container " + containerID);
-        return itemRepo.getItemsFromContainer(containerID).stream().toList();
+        return itemRepo.getItemsFromContainer(containerID).stream().map(itemDTOMapper).toList();
     }
 
-    public Collection<Item> getFromContainerGroupByCategory(Long containerID, Long categoryID){
+    public Collection<Item> getItemFromContainer(Long containerID){
+        log.info("Fetching all items from container " + containerID);
+        return itemRepo.getItemsFromContainer(containerID);
+    }
+
+    public Collection<ItemDTO> getFromContainerGroupByCategory(Long containerID, Long categoryID){
         log.info("Fetching all items by category from container " + containerID);
-        return itemRepo.getItemsFromContainerGroupByCategory(containerID, categoryID).stream().toList();
+        return itemRepo.getItemsFromContainerGroupByCategory(containerID, categoryID).stream().map(itemDTOMapper).toList();
     }
 
     /**
@@ -106,9 +117,9 @@ public class ItemServiceImpl implements ItemService {
      * @return ausgewaehltes Item
      */
     @Override
-    public Item get(Long id) {
+    public ItemDTO get(Long id) {
         log.info("Fetching chosen Item by id: {}", id);
-        return itemRepo.findById(id).get();
+        return itemRepo.findById(id).stream().map(itemDTOMapper).toList().get(0); //Nur ein Item zurückgeben, also Index 0
     }
 
     /**
@@ -127,7 +138,10 @@ public class ItemServiceImpl implements ItemService {
      * KPI-Services
      */
 
-    
+    public double calculateItemValue(){
+        log.info("Returning total value");
+        return itemRepo.calculateItemValue();
+    }
 
 
 
