@@ -24,4 +24,7 @@ public class ItemContainer {
 
     @OneToMany(mappedBy = "container")
     private Set<Item> items;
+
+    @OneToMany(mappedBy = "container", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private Set<ItemHistory> itemHistory;
 }

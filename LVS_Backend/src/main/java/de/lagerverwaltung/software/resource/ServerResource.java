@@ -240,7 +240,7 @@ public class ServerResource {
         return ResponseEntity.ok(
                 Response.builder().timestamp(LocalDateTime.now())
                         .data(Map.of("deleted", containerService.delete(id)))
-                        .message("Item deleted")
+                        .message("Container deleted")
                         .status(OK)
                         .statusCode(OK.value())
                         .build()
