@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 public class ItemHistoryServiceImpl implements ItemHistoryService {
+
     @Override
     public ItemHistory create(ItemHistory itemHistory) {
         return null;
@@ -58,7 +59,7 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
     }
 
     @Override
-    public int countimportedItemsPerContainer(Long containerID, LocalDateTime timeFrom, LocalDateTime timeTill) {
+    public int countImportedItemsPerContainer(Long containerID, LocalDateTime timeFrom, LocalDateTime timeTill) {
         return 0;
     }
 
@@ -69,11 +70,6 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
 
     @Override
     public int countImportedItemsPerCategory(String categoryName, LocalDateTime timeFrom, LocalDateTime timeTill) {
-        return 0;
-    }
-
-    @Override
-    public int countImportedItemsPreContainer() {
         return 0;
     }
 
@@ -104,11 +100,6 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
 
     @Override
     public int countExportedItemsPerCategory(String categoryName, LocalDateTime timeFrom, LocalDateTime timeTill) {
-        return 0;
-    }
-
-    @Override
-    public int countExportedItemsPreContainer() {
         return 0;
     }
 

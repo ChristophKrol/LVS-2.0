@@ -80,6 +80,63 @@ public interface ItemHistoryRepo extends JpaRepository<ItemHistory, LocalDateTim
      * Geldsumme Verkauf
      *
      */
+    @Query(value = "SELECT SUM(price) FROM item_history WHERE sold = true", nativeQuery = true )
+    double getSumExports();
+
+    @Query(
+            value = "SELECT SUM(price) FROM item_history " +
+                    "WHERE sold = true AND timestamp >= :startTime " +
+                    "AND timestamp <= :endTime", nativeQuery = true
+    )
+    double getSumExportsByTime(@Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
+
+    @Query(
+            value = "SELECT SUM(price) FROM item_history " +
+                    "WHERE sold = true AND item_category = :categoryName", nativeQuery = true
+    )
+    double getExportValueByCategory(@Param("categoryName") String categoryName);
+
+    @Query(
+         value = "SELECT SUM(price) FROM item_history " +
+                 "WHERE sold = true AND item_category = :categoryName " +
+                 "AND timestamp >= :startTime AND timeStamp <= :endTime", nativeQuery = true
+    )
+    double getExportValuePerCategory(
+            @Param("categoryName") String categoryName,
+            @Param("startTime") LocalDateTime startTime,
+            @Param("endTime") LocalDateTime endTime);
+
+ /**
+  *
+  * Summe Einkauf
+  *
+  */
+
+    @Query(value = "SELECT SUM(price) FROM item_history WHERE sold IS NULL", nativeQuery = true )
+    double getSumImports();
+
+    @Query(
+         value = "SELECT SUM(price) FROM item_history " +
+                 "WHERE sold IS NULL AND timestamp >= :startTime " +
+                 "AND timestamp <= :endTime", nativeQuery = true
+          )
+    double getSumImportsByTime(@Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
+
+    @Query(
+         value = "SELECT SUM(price) FROM item_history " +
+                 "WHERE sold IS NULL AND item_category = :categoryName", nativeQuery = true
+    )
+    double getImportValueByCategory(@Param("categoryName") String categoryName);
+
+    @Query(
+         value = "SELECT SUM(price) FROM item_history " +
+                 "WHERE sold IS NULL AND item_category = :categoryName " +
+                 "AND timestamp >= :startTime AND timeStamp <= :endTime", nativeQuery = true
+    )
+    double getImportValuePerCategory(
+         @Param("categoryName") String categoryName,
+         @Param("startTime") LocalDateTime startTime,
+         @Param("endTime") LocalDateTime endTime);
 
 
 }
