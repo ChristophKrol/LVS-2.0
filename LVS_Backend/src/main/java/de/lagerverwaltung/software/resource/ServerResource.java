@@ -1,15 +1,13 @@
 package de.lagerverwaltung.software.resource;
 
 
-import de.lagerverwaltung.software.model.Item;
-import de.lagerverwaltung.software.model.ItemCategory;
-import de.lagerverwaltung.software.model.ItemContainer;
-import de.lagerverwaltung.software.model.Response;
+import de.lagerverwaltung.software.model.*;
 import de.lagerverwaltung.software.repository.CategoryRepo;
 import de.lagerverwaltung.software.repository.ItemRepo;
 import de.lagerverwaltung.software.service.ItemCategoryService;
 import de.lagerverwaltung.software.service.implementation.ItemCategoryImpl;
 import de.lagerverwaltung.software.service.implementation.ItemContainerImpl;
+import de.lagerverwaltung.software.service.implementation.ItemHistoryServiceImpl;
 import de.lagerverwaltung.software.service.implementation.ItemServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +34,7 @@ public class ServerResource {
     private final ItemCategoryImpl categoryService;
 
     private final ItemContainerImpl containerService;
+    private final ItemHistoryServiceImpl itemHistoryService;
 
     /**
      * ITEM
@@ -112,7 +111,7 @@ public class ServerResource {
     public ResponseEntity<Response> getItemFromContainer(@PathVariable("containerID") Long id){
         return ResponseEntity.ok(
                 Response.builder().timestamp(LocalDateTime.now())
-                        .data(Map.of("items", itemService.getFromContainer(id)))
+                        .data(Map.of("container", itemService.getFromContainer(id)))
                         .message("Items retrieved from Container " + id)
                         .status(OK)
                         .statusCode(OK.value())
@@ -175,7 +174,7 @@ public class ServerResource {
     public ResponseEntity<Response> deleteItem(@PathVariable("id") Long id) {
         return ResponseEntity.ok(
                 Response.builder().timestamp(LocalDateTime.now())
-                        .data(Map.of("deleted", itemService.delete(id)))
+                        .data(Map.of("items_deleted", itemService.delete(id)))
                         .message("Item deleted")
                         .status(OK)
                         .statusCode(OK.value())
@@ -215,7 +214,7 @@ public class ServerResource {
     public ResponseEntity<Response> getContainers(){
         return ResponseEntity.ok(
                 Response.builder().timestamp(LocalDateTime.now())
-                        .data(Map.of("items", containerService.list(30)))
+                        .data(Map.of("containers", containerService.list(30)))
                         .message("Containers retrieved")
                         .status(OK)
                         .statusCode(OK.value())
@@ -227,7 +226,7 @@ public class ServerResource {
     public ResponseEntity<Response> getContainer(@PathVariable("id") Long id) {
         return ResponseEntity.ok(
                 Response.builder().timestamp(LocalDateTime.now())
-                        .data(Map.of("items", containerService.get(id)))
+                        .data(Map.of("container", containerService.get(id)))
                         .message("Container retrieved")
                         .status(OK)
                         .statusCode(OK.value())
@@ -239,7 +238,7 @@ public class ServerResource {
     public ResponseEntity<Response> deleteContainer(@PathVariable("id") Long id) {
         return ResponseEntity.ok(
                 Response.builder().timestamp(LocalDateTime.now())
-                        .data(Map.of("deleted", containerService.delete(id)))
+                        .data(Map.of("container_deleted", containerService.delete(id)))
                         .message("Container deleted")
                         .status(OK)
                         .statusCode(OK.value())
@@ -298,6 +297,33 @@ public class ServerResource {
                         .build()
         );
     }
+
+    @PostMapping("/itemhistory/save")
+    public ResponseEntity<Response> saveItemHistory(@RequestBody ItemHistory itemHistory){
+        return ResponseEntity.ok(
+                Response.builder()
+                        .timestamp(LocalDateTime.now())
+                        .data(Map.of("itemHistory", itemHistoryService.create(itemHistory)))
+                        .message("ItemHistory-Entity created")
+                        .status(CREATED)
+                        .statusCode(CREATED.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("/itemhistory/list")
+    public ResponseEntity<Response> getItemHistories(){
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of("itemHistory", itemHistoryService.getAllHistory()))
+                        .message("ItemHistory retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+
 
 
 

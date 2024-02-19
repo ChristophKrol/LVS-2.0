@@ -45,7 +45,6 @@ public class ItemServiceImpl implements ItemService {
         // Nimm immer direkt aus Datenbank und überprüfe
         Optional<ItemContainer> storingContainer = containerRepo.findById(item.getContainer().getId());
         if (storingContainer.get().getCurCapacity() + item.getSpace() < storingContainer.get().getMaxCapacity()){
-
             storingContainer.get().setCurCapacity(storingContainer.get().getCurCapacity() + item.getSpace());
             containerRepo.save(storingContainer.get());
             return itemRepo.save(item);

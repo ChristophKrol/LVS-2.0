@@ -18,6 +18,11 @@ public interface ItemHistoryRepo extends JpaRepository<ItemHistory, LocalDateTim
 
     //@Query(value = "SELECT * FROM item_history WHERE container_id := containerID", nativeQuery = true)
     List<ItemHistory> findByContainer_Id(Long containerID);
+    List<ItemHistory> findByContainer_IdAndTimestampGreaterThanEqualAndTimestampLessThanEqual(
+            Long containerID,
+            LocalDateTime startTime,
+            LocalDateTime endTime
+    );
 
    // @Query(value = "SELECT * FROM item_history WHERE container_id := containerID AND timestamp >= ", nativeQuery = true)
     List<ItemHistory> findAllByTimestampGreaterThanEqualAndAndTimestampLessThanEqual(LocalDateTime startTime, LocalDateTime endTime);
@@ -54,8 +59,23 @@ public interface ItemHistoryRepo extends JpaRepository<ItemHistory, LocalDateTim
     int countAllImportedItemsPerContainer(
             @Param("containerID") Long containerID,
             @Param("startTime") LocalDateTime startTime,
-            @Param("endtime") LocalDateTime endTime);
+            @Param("endTime") LocalDateTime endTime);
 
+
+    @Query(value =
+            "SELECT COUNT(*) AS ImportSum FROM item_history " +
+                    "WHERE sold IS NULL AND item_category = :categoryName " , nativeQuery = true)
+    int countAllImportedItemsPerCategory(@Param("categoryName") String categoryName);
+
+    @Query(value =
+            "SELECT COUNT(*) AS ImportSum FROM item_history " +
+                    "WHERE sold IS NULL AND item_category = :categoryName " +
+                    "AND timestamp >= :startTime AND  timestamp <= :endTime", nativeQuery = true)
+    int countAllImportedItemsPerCategory(
+            @Param("categoryName") String categoryName,
+            @Param("startTime") LocalDateTime startTime,
+            @Param("endTime") LocalDateTime endTime
+    );
 
     /**
      *
