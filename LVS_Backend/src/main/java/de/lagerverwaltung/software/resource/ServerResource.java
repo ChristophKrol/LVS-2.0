@@ -298,6 +298,12 @@ public class ServerResource {
         );
     }
 
+    /**
+     *
+     * ItemHistory
+     *
+     */
+
     @PostMapping("/itemhistory/save")
     public ResponseEntity<Response> saveItemHistory(@RequestBody ItemHistory itemHistory){
         return ResponseEntity.ok(
@@ -321,6 +327,67 @@ public class ServerResource {
                         .statusCode(OK.value())
                         .build()
         );
+    }
+
+    @GetMapping("/itemhistory/list/{startTime}/{endTime}")
+    public ResponseEntity<Response> getItemHistories(@PathVariable("startTime") String startTime, @PathVariable("endTime") String endTime){
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of("itemHistory", itemHistoryService.getAllHistory(startTime, endTime)))
+                        .message("ItemHistory retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/container/{containerID}")
+    public ResponseEntity<Response> getItemHistoryFromContainer(@PathVariable("containerID") Long containerID){
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of("itemHistory_container", itemHistoryService.getHistoryFromContainer(containerID)))
+                        .message("ItemHistory from Container: " + containerID + " retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/container/{containerID}/{startTime}/{endTime}")
+    public ResponseEntity<Response> getItemHistoryFromContainer(
+            @PathVariable("containerID") Long containerID,
+            @PathVariable("startTime") String startTime,
+            @PathVariable("endTime") String endTime
+            ){
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "itemHistoryByContainer",
+                                itemHistoryService.getHistoryFromContainer(containerID, startTime, endTime)
+
+                        ))
+                        .message("ItemHistory from Container: " + containerID + " retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/category/{categoryName}")
+    public ResponseEntity<Response> getItemHistoryByCategory(@PathVariable("categoryName") String categoryName){
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "itemHistoryByCategory",
+                                itemHistoryService.getCategoryHistory(categoryName)
+
+                        ))
+                        .message("ItemHistory from Category: " + categoryName + " retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+
     }
 
 

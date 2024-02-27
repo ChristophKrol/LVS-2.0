@@ -6,13 +6,16 @@ import de.lagerverwaltung.software.exception.NoSpaceAvailableException;
 import de.lagerverwaltung.software.model.Item;
 import de.lagerverwaltung.software.model.ItemCategory;
 import de.lagerverwaltung.software.model.ItemContainer;
+import de.lagerverwaltung.software.model.ItemHistory;
 import de.lagerverwaltung.software.repository.ContainerRepo;
 import de.lagerverwaltung.software.repository.ItemRepo;
+import de.lagerverwaltung.software.service.ItemHistoryService;
 import de.lagerverwaltung.software.service.ItemService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -32,6 +35,7 @@ public class ItemServiceImpl implements ItemService {
     private final ItemRepo itemRepo;
     private final ContainerRepo containerRepo;
     private final ItemDTOMapper itemDTOMapper;
+    private final ItemHistoryService itemHistoryService;
 
     /**
      * Erstellt neue Items
@@ -44,16 +48,25 @@ public class ItemServiceImpl implements ItemService {
         //item.setImageUrl(item.getCategory().getImageUrl()); //Set Image of items category
         // Nimm immer direkt aus Datenbank und überprüfe
         Optional<ItemContainer> storingContainer = containerRepo.findById(item.getContainer().getId());
+        //Überprüfe Kapazität
         if (storingContainer.get().getCurCapacity() + item.getSpace() < storingContainer.get().getMaxCapacity()){
             storingContainer.get().setCurCapacity(storingContainer.get().getCurCapacity() + item.getSpace());
+            // Ändere Kapazität
             containerRepo.save(storingContainer.get());
-            return itemRepo.save(item);
+
+            // History-Object anlegen
+
+            Item createdItem = itemRepo.save(item);
+            itemHistoryService.create(createdItem, false);
+            return createdItem;
 
         }
         else {
             throw new NoSpaceAvailableException(item.getContainer().getId());
         }
     }
+
+
 
     /**
      * Loescht Item
@@ -69,6 +82,8 @@ public class ItemServiceImpl implements ItemService {
         storingContainer.setCurCapacity(storingContainer.getCurCapacity() - itemToDelete.getSpace());
         containerRepo.save(storingContainer);
         itemRepo.deleteById(id);
+        //History objekt anlegen
+        itemHistoryService.create(itemToDelete, true);
         return Boolean.TRUE;
     }
 

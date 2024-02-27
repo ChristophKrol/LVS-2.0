@@ -26,6 +26,7 @@ public class ItemContainerImpl implements ItemContainerService {
         return containerRepo.save(container);
     }
 
+
     @Override
     public Collection<ItemContainer> list(int limit) {
         log.info("Fetching all items");

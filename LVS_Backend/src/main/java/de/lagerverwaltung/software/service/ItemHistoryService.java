@@ -1,5 +1,6 @@
 package de.lagerverwaltung.software.service;
 
+import de.lagerverwaltung.software.model.Item;
 import de.lagerverwaltung.software.model.ItemHistory;
 
 import java.time.LocalDateTime;
@@ -8,12 +9,15 @@ import java.util.Collection;
 public interface ItemHistoryService {
 
     ItemHistory create(ItemHistory itemHistory);
+
+    ItemHistory create(Item item, boolean sold);
+
     Collection<ItemHistory> getHistoryFromContainer(Long containerID);
-    Collection<ItemHistory> getHistoryFromContainer(Long containerID, LocalDateTime timeFrom, LocalDateTime timeTill);
+    Collection<ItemHistory> getHistoryFromContainer(Long containerID, String timeFrom, String timeTill);
     Collection<ItemHistory> getAllHistory();
-    Collection<ItemHistory> getAllHistory(LocalDateTime timeFrom, LocalDateTime timeTill);
+    Collection<ItemHistory> getAllHistory(String timeFrom, String timeTill);
     Collection<ItemHistory> getCategoryHistory(String categoryName);
-    Collection<ItemHistory> getCategoryHistory(String categoryName, LocalDateTime timeFrom, LocalDateTime timeTill);
+    Collection<ItemHistory> getCategoryHistory(String categoryName, String timeFrom, String timeTill);
 
     //TODO: Anzahl Eingang gesamt + Pro Container
     int countAllImportedItems();

@@ -1,5 +1,7 @@
 package de.lagerverwaltung.software.dto;
 
+import java.util.UUID;
+
 public record ItemDTO (
         Long id,
         String name,
