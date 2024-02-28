@@ -379,9 +379,27 @@ public class ServerResource {
                 Response.builder().timestamp(LocalDateTime.now())
                         .data(Map.of(
                                 "itemHistoryByCategory",
-                                itemHistoryService.getCategoryHistory(categoryName)
+                                itemHistoryService.getCategoryHistory(categoryName)))
+                        .message("ItemHistory from Category: " + categoryName + " retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
 
-                        ))
+    }
+
+
+    @GetMapping("itemhistory/category/{categoryName}/{startTime}/{endTime}")
+    public ResponseEntity<Response> getItemHistoryByCategory(
+            @PathVariable("categoryName") String categoryName,
+            @PathVariable("startTime") String startTime,
+            @PathVariable("endTime") String endTime
+    ){
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "itemHistoryByCategory",
+                                itemHistoryService.getCategoryHistory(categoryName, startTime, endTime)))
                         .message("ItemHistory from Category: " + categoryName + " retrieved")
                         .status(OK)
                         .statusCode(OK.value())

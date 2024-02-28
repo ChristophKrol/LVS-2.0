@@ -7,6 +7,7 @@ import de.lagerverwaltung.software.service.ItemHistoryService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,7 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
                 item.getSpace(),
                 item.getCategory().getName(),
                 sold,
+                item.getCategory(),
                 item.getContainer()
         );
         return itemHistoryRepo.save(newHistory);
@@ -48,6 +50,8 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
     @Override
     public Collection<ItemHistory> getHistoryFromContainer(Long containerID) {
         log.info("Fetching ItemHistory from container " + containerID );
+        Collection<ItemHistory> result = itemHistoryRepo.findByContainer_Id(containerID);
+        log.info(result.toString());
         return itemHistoryRepo.findByContainer_Id(containerID);
     }
 
@@ -58,6 +62,7 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
         LocalDateTime startTime = LocalDateTime.parse(timeFrom, formatter);
         LocalDateTime endTime = LocalDateTime.parse(timeTill, formatter);
         log.info("fetching ItemHistory from container " + containerID );
+
         return itemHistoryRepo
                 .findByContainer_IdAndTimestampGreaterThanEqualAndTimestampLessThanEqual(
                         containerID,
@@ -81,10 +86,12 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
                 .findAllByTimestampGreaterThanEqualAndAndTimestampLessThanEqual(startTime, endTime);
     }
 
-
+    //Done
     @Override
     public Collection<ItemHistory> getCategoryHistory(String categoryName) {
-        return itemHistoryRepo.getCategoryHistory(categoryName);
+        Collection<ItemHistory> result = itemHistoryRepo.findByItemCategoryName(categoryName);
+        log.info(result.toString());
+        return result;
     }
 
     @Override

@@ -11,18 +11,24 @@ import java.util.UUID;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "itemHistory")
+
 public class ItemHistory {
     @Id
-    LocalDateTime timestamp;
-    Long itemID;
-    String itemName;
-    double itemPrice;
-    int itemSpace;
-    String itemCategory;
-    boolean sold; // Wenn Item Delete, dann quasi sold = true
+    private LocalDateTime timestamp;
+    private Long itemID;
+    private String itemName;
+    private double itemPrice;
+    private int itemSpace;
+    private String itemCategoryName;
+    private boolean sold; // Wenn Item Delete, dann quasi sold = true
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "id")
+    private ItemCategory itemCategory;
 
 
     @ManyToOne(fetch = FetchType.EAGER)

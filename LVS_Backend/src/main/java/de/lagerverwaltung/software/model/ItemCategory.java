@@ -21,4 +21,7 @@ public class ItemCategory {
 
     @OneToMany(mappedBy = "category")
     private Set<Item> items;
+
+    @OneToMany(mappedBy = "itemCategory", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private Set<ItemHistory> itemHistory;
 }

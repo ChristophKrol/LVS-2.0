@@ -29,8 +29,10 @@ public interface ItemHistoryRepo extends JpaRepository<ItemHistory, LocalDateTim
 
 
 
-    @Query(value = "SELECT * FROM item_history WHERE item_category = :itemCategory", nativeQuery = true)
+    @Query(value = "SELECT * FROM item_history WHERE item_category_name = :itemCategory", nativeQuery = true)
     List<ItemHistory> getCategoryHistory(@Param("itemCategory") String categoryName);
+
+    List<ItemHistory> findByItemCategoryName(String itemCategory);
 
     List<ItemHistory> findByItemCategoryAndTimestampGreaterThanEqualAndTimestampLessThanEqual
             (String categoryName, LocalDateTime startTime, LocalDateTime endTime);
