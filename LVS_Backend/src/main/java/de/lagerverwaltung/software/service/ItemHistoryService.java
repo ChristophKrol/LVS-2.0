@@ -21,28 +21,28 @@ public interface ItemHistoryService {
 
     //TODO: Anzahl Eingang gesamt + Pro Container
     int countAllImportedItems();
-    int countAllImportedItems(LocalDateTime timeFrom, LocalDateTime timeTill);
+    int countAllImportedItems(String timeFrom, String timeTill);
     int countImportedItemsPerContainer(Long containerID);
-    int countImportedItemsPerContainer(Long containerID, LocalDateTime timeFrom, LocalDateTime timeTill);
+    int countImportedItemsPerContainer(Long containerID, String timeFrom, String timeTill);
     int countImportedItemsPerCategory(String categoryName);
-    int countImportedItemsPerCategory(String categoryName, LocalDateTime timeFrom, LocalDateTime timeTill);
+    int countImportedItemsPerCategory(String categoryName, String timeFrom, String timeTill);
     //TODO: Anzahl Ausgänge gesamt + Pro Container -- das in Repo implementieren
     int countAllExportedItems();
-    int countAllExportedItems(LocalDateTime timeFrom, LocalDateTime timeTill);
+    int countAllExportedItems(String timeFrom, String timeTill);
     int countExportedItemsPerContainer(Long containerID);
-    int countExportedItemsPerContainer(Long containerID, LocalDateTime timeFrom, LocalDateTime timeTill);
+    int countExportedItemsPerContainer(Long containerID, String timeFrom, String timeTill);
     int countExportedItemsPerCategory(String categoryName);
-    int countExportedItemsPerCategory(String categoryName, LocalDateTime timeFrom, LocalDateTime timeTill);
+    int countExportedItemsPerCategory(String categoryName, String timeFrom, String timeTill);
     //TODO: Gesamtsumme Verkauf
     double getExportValue();
-    double getExportValue(LocalDateTime timeFrom, LocalDateTime timeTill);
+    double getExportValue(String timeFrom, String timeTill);
     double getExportValuePerCategory(String categoryName);
-    double getExportValuePerCategory(String categoryName, LocalDateTime timeFrom, LocalDateTime timeTill);
+    double getExportValuePerCategory(String categoryName, String timeFrom, String timeTill);
     //TODO: Gesamtsumme Einkauf
     double getImportValue();
-    double getImportValue(LocalDateTime timeFrom, LocalDateTime timeTill);
+    double getImportValue(String timeFrom, String timeTill);
     double getImportValuePerCategory(String categoryName);
-    double getImportValuePerCategory(String categoryName, LocalDateTime timeFrom, LocalDateTime timeTill);
+    double getImportValuePerCategory(String categoryName, String timeFrom, String timeTill);
 
 
 }

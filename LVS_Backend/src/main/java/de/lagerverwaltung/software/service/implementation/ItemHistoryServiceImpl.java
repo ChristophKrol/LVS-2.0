@@ -32,8 +32,8 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
     @Override
     public ItemHistory create(Item item, boolean sold) {
         ItemHistory newHistory = new ItemHistory(
-                LocalDateTime.now(),
                 item.getId(),
+                LocalDateTime.now(),
                 item.getName(),
                 item.getPrice(),
                 item.getSpace(),
@@ -96,11 +96,11 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
 
     @Override
     public Collection<ItemHistory> getCategoryHistory(String categoryName, String timeFrom, String timeTill) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         LocalDateTime startTime = LocalDateTime.parse(timeFrom, formatter);
         LocalDateTime endTime = LocalDateTime.parse(timeTill, formatter);
         return itemHistoryRepo
-                .findByItemCategoryAndTimestampGreaterThanEqualAndTimestampLessThanEqual(
+                .findByItemCategoryNameAndTimestampGreaterThanEqualAndTimestampLessThanEqual(
                         categoryName,
                         startTime,
                         endTime
@@ -113,8 +113,11 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
     }
 
     @Override
-    public int countAllImportedItems(LocalDateTime timeFrom, LocalDateTime timeTill) {
-        return itemHistoryRepo.countAllImportedItems(timeFrom, timeTill);
+    public int countAllImportedItems(String timeFrom, String timeTill) {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime startTime = LocalDateTime.parse(timeFrom, formatter);
+        LocalDateTime endTime = LocalDateTime.parse(timeTill, formatter);
+        return itemHistoryRepo.countAllImportedItems(startTime, endTime);
     }
 
     @Override
@@ -123,8 +126,11 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
     }
 
     @Override
-    public int countImportedItemsPerContainer(Long containerID, LocalDateTime timeFrom, LocalDateTime timeTill) {
-        return itemHistoryRepo.countAllImportedItemsPerContainer(containerID, timeFrom, timeTill);
+    public int countImportedItemsPerContainer(Long containerID, String timeFrom, String timeTill) {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime startTime = LocalDateTime.parse(timeFrom, formatter);
+        LocalDateTime endTime = LocalDateTime.parse(timeTill, formatter);
+        return itemHistoryRepo.countAllImportedItemsPerContainer(containerID, startTime, endTime);
     }
 
     @Override
@@ -133,8 +139,11 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
     }
 
     @Override
-    public int countImportedItemsPerCategory(String categoryName, LocalDateTime timeFrom, LocalDateTime timeTill) {
-        return itemHistoryRepo.countAllImportedItemsPerCategory(categoryName, timeFrom, timeTill);
+    public int countImportedItemsPerCategory(String categoryName, String timeFrom, String timeTill) {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime startTime = LocalDateTime.parse(timeFrom, formatter);
+        LocalDateTime endTime = LocalDateTime.parse(timeTill, formatter);
+        return itemHistoryRepo.countAllImportedItemsPerCategory(categoryName, startTime, endTime);
     }
 
     @Override
@@ -143,8 +152,11 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
     }
 
     @Override
-    public int countAllExportedItems(LocalDateTime timeFrom, LocalDateTime timeTill) {
-        return itemHistoryRepo.countByTimestampGreaterThanEqualAndTimestampLessThanEqualAndSoldIsTrue(timeFrom, timeTill);
+    public int countAllExportedItems(String timeFrom, String timeTill) {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime startTime = LocalDateTime.parse(timeFrom, formatter);
+        LocalDateTime endTime = LocalDateTime.parse(timeTill, formatter);
+        return itemHistoryRepo.countByTimestampGreaterThanEqualAndTimestampLessThanEqualAndSoldIsTrue(startTime, endTime);
     }
 
     @Override
@@ -153,13 +165,16 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
     }
 
     @Override
-    public int countExportedItemsPerContainer(Long containerID, LocalDateTime timeFrom, LocalDateTime timeTill) {
+    public int countExportedItemsPerContainer(Long containerID, String timeFrom, String timeTill) {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime startTime = LocalDateTime.parse(timeFrom, formatter);
+        LocalDateTime endTime = LocalDateTime.parse(timeTill, formatter);
         return itemHistoryRepo
                 .countByContainer_IdAndSoldIsTrueAndTimestampGreaterThanEqualAndTimestampLessThanEqual
                         (
                                 containerID,
-                                timeFrom,
-                                timeTill
+                                startTime,
+                                endTime
                         );
     }
 
@@ -169,13 +184,16 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
     }
 
     @Override
-    public int countExportedItemsPerCategory(String categoryName, LocalDateTime timeFrom, LocalDateTime timeTill) {
+    public int countExportedItemsPerCategory(String categoryName, String timeFrom, String timeTill) {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime startTime = LocalDateTime.parse(timeFrom, formatter);
+        LocalDateTime endTime = LocalDateTime.parse(timeTill, formatter);
         return itemHistoryRepo
                 .countByItemCategoryAndSoldIsTrueAndTimestampGreaterThanEqualAndTimestampLessThanEqual
                         (
                                 categoryName,
-                                timeFrom,
-                                timeTill
+                                startTime,
+                                endTime
                         );
     }
 
@@ -185,8 +203,11 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
     }
 
     @Override
-    public double getExportValue(LocalDateTime timeFrom, LocalDateTime timeTill) {
-        return itemHistoryRepo.getSumExportsByTime(timeFrom, timeTill);
+    public double getExportValue(String timeFrom, String timeTill) {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime startTime = LocalDateTime.parse(timeFrom, formatter);
+        LocalDateTime endTime = LocalDateTime.parse(timeTill, formatter);
+        return itemHistoryRepo.getSumExportsByTime(startTime, endTime);
     }
 
     @Override
@@ -195,8 +216,11 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
     }
 
     @Override
-    public double getExportValuePerCategory(String categoryName, LocalDateTime timeFrom, LocalDateTime timeTill) {
-        return itemHistoryRepo.getExportValuePerCategory(categoryName, timeFrom, timeTill);
+    public double getExportValuePerCategory(String categoryName, String timeFrom, String timeTill) {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime startTime = LocalDateTime.parse(timeFrom, formatter);
+        LocalDateTime endTime = LocalDateTime.parse(timeTill, formatter);
+        return itemHistoryRepo.getExportValuePerCategory(categoryName, startTime, endTime);
     }
 
     @Override
@@ -205,8 +229,11 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
     }
 
     @Override
-    public double getImportValue(LocalDateTime timeFrom, LocalDateTime timeTill) {
-        return itemHistoryRepo.getSumImportsByTime(timeFrom, timeTill);
+    public double getImportValue(String timeFrom, String timeTill) {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime startTime = LocalDateTime.parse(timeFrom, formatter);
+        LocalDateTime endTime = LocalDateTime.parse(timeTill, formatter);
+        return itemHistoryRepo.getSumImportsByTime(startTime, endTime);
     }
 
     @Override
@@ -215,7 +242,14 @@ public class ItemHistoryServiceImpl implements ItemHistoryService {
     }
 
     @Override
-    public double getImportValuePerCategory(String categoryName, LocalDateTime timeFrom, LocalDateTime timeTill) {
-        return itemHistoryRepo.getImportValuePerCategory(categoryName, timeFrom, timeTill);
+    public double getImportValuePerCategory(String categoryName, String timeFrom, String timeTill) {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime startTime = LocalDateTime.parse(timeFrom, formatter);
+        LocalDateTime endTime = LocalDateTime.parse(timeTill, formatter);
+        return itemHistoryRepo.getImportValuePerCategory(categoryName, startTime, endTime);
     }
+
+
+
+
 }

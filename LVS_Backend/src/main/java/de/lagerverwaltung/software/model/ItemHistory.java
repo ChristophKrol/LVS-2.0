@@ -17,13 +17,15 @@ import java.util.UUID;
 
 public class ItemHistory {
     @Id
-    private LocalDateTime timestamp;
     private Long itemID;
+    private LocalDateTime timestamp;
     private String itemName;
     private double itemPrice;
     private int itemSpace;
     private String itemCategoryName;
     private boolean sold; // Wenn Item Delete, dann quasi sold = true
+
+
 
 
     @ManyToOne(fetch = FetchType.EAGER)

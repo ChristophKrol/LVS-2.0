@@ -408,6 +408,342 @@ public class ServerResource {
 
     }
 
+    @GetMapping("itemhistory/getImports")
+    public ResponseEntity<Response> countImportedItems(){
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "ImportsTotal",
+                                itemHistoryService.countAllImportedItems()))
+                        .message("Sum of imported Items retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+
+    }
+    @GetMapping("itemhistory/getImports/{startTime}/{endTime}")
+    public ResponseEntity<Response> countImportedItems(
+            @PathVariable("startTime") String startTime,
+            @PathVariable("endTime") String endTime
+    ){
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "getImportsByTime",
+                                itemHistoryService.countAllImportedItems(startTime, endTime)))
+                        .message("Sum of imported Items retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+
+    }
+
+    @GetMapping("itemhistory/getImports/container/{containerID}")
+    public ResponseEntity<Response> countImportedItemsByContainer(@PathVariable("containerID") Long containerID){
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "getImportsByContainer",
+                                itemHistoryService.countImportedItemsPerContainer(containerID)))
+                        .message("Sum of imported Items retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+
+
+    @GetMapping("itemhistory/getImports/container/{containerID}/{startTime}/{endTime}")
+    public ResponseEntity<Response> countImportedItemsPerContainer(
+            @PathVariable("containerID") Long containerID,
+            @PathVariable("startTime") String startTime,
+            @PathVariable("endTime") String endTime
+    ) {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "countImportedItemsPerContainer",
+                                itemHistoryService.countImportedItemsPerContainer(containerID, startTime, endTime)))
+                        .message("Count of imported items per container retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/getImports/category/{categoryName}")
+    public ResponseEntity<Response> countImportedItemsPerCategory(
+            @PathVariable("categoryName") String categoryName
+    ) {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "countImportedItemsPerCategory",
+                                itemHistoryService.countImportedItemsPerCategory(categoryName)))
+                        .message("Count of imported items per category retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/getImports/category/{categoryName}/{startTime}/{endTime}")
+    public ResponseEntity<Response> countImportedItemsPerCategory(
+            @PathVariable("categoryName") String categoryName,
+            @PathVariable("startTime") String startTime,
+            @PathVariable("endTime") String endTime
+    ) {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "countImportedItemsPerCategory",
+                                itemHistoryService.countImportedItemsPerCategory(categoryName, startTime, endTime)))
+                        .message("Count of imported items per category retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/getExports")
+    public ResponseEntity<Response> countAllExportedItems() {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "countAllExportedItems",
+                                itemHistoryService.countAllExportedItems()))
+                        .message("Count of all exported items retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/getExports/{startTime}/{endTime}")
+    public ResponseEntity<Response> countAllExportedItems(
+            @PathVariable("startTime") String startTime,
+            @PathVariable("endTime") String endTime
+    ) {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "countAllExportedItems",
+                                itemHistoryService.countAllExportedItems(startTime, endTime)))
+                        .message("Count of all exported items retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/getExports/container/{containerID}")
+    public ResponseEntity<Response> countExportedItemsPerContainer(
+            @PathVariable("containerID") Long containerID
+    ) {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "countExportedItemsPerContainer",
+                                itemHistoryService.countExportedItemsPerContainer(containerID)))
+                        .message("Count of exported items per container retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/getExports/container/{containerID}/{startTime}/{endTime}")
+    public ResponseEntity<Response> countExportedItemsPerContainer(
+            @PathVariable("containerID") Long containerID,
+            @PathVariable("startTime") String startTime,
+            @PathVariable("endTime") String endTime
+    ) {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "countExportedItemsPerContainer",
+                                itemHistoryService.countExportedItemsPerContainer(containerID, startTime, endTime)))
+                        .message("Count of exported items per container retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/getExports/category/{categoryName}")
+    public ResponseEntity<Response> countExportedItemsPerCategory(
+            @PathVariable("categoryName") String categoryName
+    ) {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "countExportedItemsPerCategory",
+                                itemHistoryService.countExportedItemsPerCategory(categoryName)))
+                        .message("Count of exported items per category retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/getExports/category/{categoryName}/{startTime}/{endTime}")
+    public ResponseEntity<Response> countExportedItemsPerCategory(
+            @PathVariable("categoryName") String categoryName,
+            @PathVariable("startTime") String startTime,
+            @PathVariable("endTime") String endTime
+    ) {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "countExportedItemsPerCategory",
+                                itemHistoryService.countExportedItemsPerCategory(categoryName, startTime, endTime)))
+                        .message("Count of exported items per category retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/getExportValue")
+    public ResponseEntity<Response> getExportValue() {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "getExportValue",
+                                itemHistoryService.getExportValue()))
+                        .message("Export value retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/getExportValue/{startTime}/{endTime}")
+    public ResponseEntity<Response> getExportValue(
+            @PathVariable("startTime") String startTime,
+            @PathVariable("endTime") String endTime
+    ) {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "getExportValue",
+                                itemHistoryService.getExportValue(startTime, endTime)))
+                        .message("Export value retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/getExportValue/category/{categoryName}")
+    public ResponseEntity<Response> getExportValuePerCategory(
+            @PathVariable("categoryName") String categoryName
+    ) {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "getExportValuePerCategory",
+                                itemHistoryService.getExportValuePerCategory(categoryName)))
+                        .message("Export value per category retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/getExportValue/category/{categoryName}/{startTime}/{endTime}")
+    public ResponseEntity<Response> getExportValuePerCategory(
+            @PathVariable("categoryName") String categoryName,
+            @PathVariable("startTime") String startTime,
+            @PathVariable("endTime") String endTime
+    ) {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "getExportValuePerCategory",
+                                itemHistoryService.getExportValuePerCategory(categoryName, startTime, endTime)))
+                        .message("Export value per category retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+
+    @GetMapping("itemhistory/getImportValue")
+    public ResponseEntity<Response> getImportValue() {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "getImportValue",
+                                itemHistoryService.getImportValue()))
+                        .message("Total import value retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/getImportValue/{startTime}/{endTime}")
+    public ResponseEntity<Response> getImportValue(
+            @PathVariable("startTime") String startTime,
+            @PathVariable("endTime") String endTime
+    ) {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "getImportValueByTime",
+                                itemHistoryService.getImportValue(startTime, endTime)))
+                        .message("Import value by time range retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/getImportValue/category/{categoryName}")
+    public ResponseEntity<Response> getImportValuePerCategory(
+            @PathVariable("categoryName") String categoryName
+    ) {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "getImportValuePerCategory",
+                                itemHistoryService.getImportValuePerCategory(categoryName)))
+                        .message("Import value for a specific category retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+    @GetMapping("itemhistory/getImportValue/category/{categoryName}/{startTime}/{endTime}")
+    public ResponseEntity<Response> getImportValuePerCategory(
+            @PathVariable("categoryName") String categoryName,
+            @PathVariable("startTime") String startTime,
+            @PathVariable("endTime") String endTime
+    ) {
+        return ResponseEntity.ok(
+                Response.builder().timestamp(LocalDateTime.now())
+                        .data(Map.of(
+                                "getImportValuePerCategoryByTime",
+                                itemHistoryService.getImportValuePerCategory(categoryName, startTime, endTime)))
+                        .message("Import value for a specific category by time range retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+
+
+
+
+
+
 
 
 
