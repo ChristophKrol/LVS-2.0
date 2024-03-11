@@ -1,3 +1,17 @@
+h1{
+    
+}
+body{
+    background-color: #B6FFFA;
+}
+.dataWrapper{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #B6FFFA;
+}
+
+
 .lieferungenVerlauf{
     width: 650px;
     height: 400px;
@@ -11,4 +25,21 @@
     justify-content: space-between;
     padding-left: 30px;
     padding-right: 30px;
+}
+
+.buttonDiv{
+    display: flex;
+    justify-content: center;
+    background-color: #B6FFFA;
+    
+}
+
+.buttonWrapper{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.kpiWrapper span{
+    margin-bottom: 100px;
 }

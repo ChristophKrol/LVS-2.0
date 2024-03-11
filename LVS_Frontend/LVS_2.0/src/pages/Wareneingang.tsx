@@ -14,6 +14,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import styles from './styles/Wareneingang.module.css';
+import Button from 'react-bootstrap/Button';
 
 
 function Wareneingang(){
@@ -44,17 +45,34 @@ function Wareneingang(){
         <>
         
             <h1>Wareneingang</h1>
-            <div className={styles.lieferungenVerlauf}>
-                <span className={styles.lieferungenHeader}>
-                    <h2>Ein- und Ausgänge</h2>
-                    <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                    </DropdownButton>
-                </span>  
-                <Line data = {data} options ={options}></Line>
+            <div className={styles.dataWrapper}>
+                <div className={styles.lieferungenVerlauf}>
+                    <h2>Lieferungen pro Woche</h2> 
+                    <Line data = {data} options ={options}></Line>
+                </div>
+                <div className={styles.kpiWrapper}>
+                    <span className={styles.kpiSpan}>
+                        <h2> Lieferungen diese Woche </h2>
+                        <h2> 100 </h2>
+                    </span>
+                    <span className={styles.kpiSpan}>
+                        <h2> Lieferungen heute </h2>
+                        <h2> 10 </h2>
+                    </span>
+                </div>
             </div>
+            <div className={styles.buttonDiv}>
+                        <span className={styles.buttonWrapper}>
+                            <DropdownButton id="dropdown-basic-button" title="Zeitraum auswählen">
+                                <Dropdown.Item href="#/action-1">Woche</Dropdown.Item>
+                                <Dropdown.Item href="#/action-2">Monat</Dropdown.Item>
+                                <Dropdown.Item href="#/action-3">Zeitraum</Dropdown.Item>
+                            </DropdownButton>
+                            <Button variant="primary">Ware hinzufügen</Button>
+                        </span>
+
+                </div>
+            
         </>
         
     );
