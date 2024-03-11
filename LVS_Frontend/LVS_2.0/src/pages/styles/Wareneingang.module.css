@@ -1,0 +1,14 @@
+.lieferungenVerlauf{
+    width: 650px;
+    height: 400px;
+    text-align: center;
+    margin-top: 100px;
+
+}
+
+.lieferungenHeader{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
+}

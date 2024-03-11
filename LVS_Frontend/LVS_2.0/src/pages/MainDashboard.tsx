@@ -56,7 +56,6 @@ function MainDashboard(){
         max:15
       }
     }
-
   }
 
   const auslastungData={

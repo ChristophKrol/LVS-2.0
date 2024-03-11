@@ -1,6 +1,6 @@
 import Footer from "./Footer.tsx";
 import Header from "./Header.tsx";
-import MainDashboard from "./assets/components/visualization/MainDashboard.tsx";
+import MainDashboard from "./pages/MainDashboard.tsx";
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
