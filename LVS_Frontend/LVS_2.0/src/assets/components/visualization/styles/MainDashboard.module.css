@@ -1,0 +1,54 @@
+header{
+    background-color: #98E4FF;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+
+}
+h1{
+    text-align: center;
+    margin: 0px 0px 0px 0px;
+    
+}
+
+span{
+    text-align: center;
+}
+
+.header{
+    display:flex;
+    justify-content: space-between;
+    gap: 1px;
+    padding-left: 75px;
+    padding-right: 75px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #98E4FF;
+    margin: 0px 0px 0px 0px;
+}
+
+.diagramDiv{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 75px;
+    padding-right: 75px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.ein_ausgaenge{
+    width: 650px;
+    height: 400px;
+    text-align: center;
+}
+
+.auslastung{
+    width: 350px;
+    height:350px;
+    text-align: center;
+
+
+}
+
+.auslastungWert{
+    
+}

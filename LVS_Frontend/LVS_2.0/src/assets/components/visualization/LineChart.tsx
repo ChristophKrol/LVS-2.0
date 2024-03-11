@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const data = [
+const lineChartData = [
   {
     name: 'Page A',
     uv: 4000,
@@ -46,7 +46,7 @@ const data = [
   },
 ];
 
-export default class Example extends PureComponent {
+export default class Linechart extends PureComponent {
   static demoUrl = 'https://codesandbox.io/s/simple-line-chart-kec3v';
 
   render() {
