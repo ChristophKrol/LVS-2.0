@@ -17,6 +17,7 @@
 </ul>
 <h3> Setup </h3>
 <ol>
+  <li> Im application.yml die Datenbankverbindung konfigurieren </li>
   <li> Backend mithilfe von z.B. IntelliJ starten. Dazu SoftwareApplication.java starten im Paket de.lagerverwaltung.software </li>
   <li> Im Ordner 'LVS_Frontend' den Ordner 'LVS_2.0' öffnen</li>
   <li> In diesem Ordner das Terminal öffnen und folgenden Befehl ausführen: 'npm install vite @vitejs/plugin-react'. Vite wird neu installiert und wird benötigt, um die App zu starten </li>
