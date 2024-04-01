@@ -1,0 +1,123 @@
+:root {
+    --white-background: #fafafa;
+    --content-panel: #e4e5f1;
+    --button: #484b6a;
+    --table-row-1: #d2d3db;
+    --table-row-2: #9394a5;
+}
+
+.popupHeader{
+    background-color: var(--white-background);
+    display: flex;
+    justify-content: flex-start;
+    gap: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
+
+.btnStandard{
+    display: inline-block;
+    font-weight: 400;
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    background-color: var(--button);
+    border: 1px solid transparent;
+    padding: 0.45rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.45rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+      box-shadow 0.15s ease-in-out;
+
+}
+
+
+
+
+.backgroundDiv{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background*/
+        backdrop-filter: blur(5px); /* backdrop filter for blur effect */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+
+.closingButtonArea{
+    display: flex;
+    justify-content: flex-end;
+}
+form{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: var(--white-background);
+}
+
+.formDiv{
+        background-color: var(--white-background);
+        text-align: center;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+          width: 800px !important;
+          max-width: 1200px;
+          max-height: 700px;
+          overflow-y: auto;
+
+}
+
+.inputSpan{
+    width: 100%;
+  
+}
+
+.column{
+    display: flex !important;
+    align-content: space-between !important;
+}
+
+
+.formFooter{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
+
+
+
+.tableContainer{
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+.regalKPI{
+    display: flex;
+    justify-content: space-between;
+    width: 120%;
+}
+
+#regalForm{
+    max-height: 800px;
+}
+.regalKPIWrapper{
+    padding-left: 35px;
+
+
+}
+
+
+thead {
+    background-color: var(--table-row-2);
+}
+th{
+    text-align: center;
+}

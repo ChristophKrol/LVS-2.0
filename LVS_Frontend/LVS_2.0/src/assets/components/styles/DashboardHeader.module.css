@@ -1,0 +1,37 @@
+:root {
+    --white-background: #fafafa;
+    --content-panel: #e4e5f1;
+    --button: #484b6a;
+    --table-row-1: #d2d3db;
+    --table-row-2: #9394a5;
+}
+  
+
+
+header{
+    background-color: var(--content-panel);
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+
+}
+h1{
+    text-align: center;
+    margin: 0px 0px 75px 0px;
+    
+}
+
+span{
+    text-align: center;
+}
+
+.header{
+    display:flex;
+    justify-content: space-between;
+    gap: 1px;
+    padding-left: 75px;
+    padding-right: 75px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: var(--content-panel);
+    margin: 0px 0px 0px 0px;
+}

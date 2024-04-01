@@ -1,0 +1,1 @@
+export const Itemdata = [70, 30]

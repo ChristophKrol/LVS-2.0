@@ -1,0 +1,120 @@
+/**
+* https://colorhunt.co/palette/b6fffa98e4ff80b3ff687eff
+*/
+
+:root {
+  --white-background: #fafafa;
+  --content-panel: #e4e5f1;
+  --button: #484b6a;
+  --buttonActive: #34364c;
+  --buttonHover: #5d6189;
+  --table-row-1: #d2d3db;
+  --table-row-2: #9394a5;
+}
+
+div{
+  /*background-color: white;*/
+}
+
+.btn-primary{
+  background-color: var(--button) !important;
+  border-color: var(--button);
+}
+
+.btn-primary:hover{
+  background-color: var(--buttonHover) !important;
+}
+
+.btn-row{
+  padding-left: 6.4rem;
+  padding-right: 6.4rem;
+}
+
+
+.btnStandard{
+  display: inline-block;
+  font-weight: 400;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  background-color: var(--button);
+  border: 1px solid transparent;
+  padding: 0.45rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.45rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+
+}
+
+select{
+  background-color: var(--button);
+  color: white;
+  border-radius: 7px;
+  width: 10rem;
+  height: 2.25rem;
+}
+
+
+
+
+
+html{
+  font-family:Arial, Helvetica, sans-serif;
+  color: black;
+  background-color: var(--white-background);
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+}
+body{
+  background-color: var(--white-background);
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+}
+
+
+.SideBar{
+  height: 100vh;
+  width: 100px;
+  background-color: var(--button);
+  position:fixed;
+}
+
+.SideBarList{
+  padding: 0;
+  padding-top: 3rem;
+  padding-bottom: 5rem;
+  height: auto;
+  width: 100%;
+}
+
+.SideBarList .row{
+  width: 100%;
+  height: 50px;
+  list-style-type: none;
+  margin: 0;
+  margin-bottom: 5rem;
+  display: flex;
+  justify-content: center;
+  background-color: var(--button);
+  color: white;
+  
+
+}
+
+.SideBarList .row:hover{
+  cursor: pointer;
+  background-color: var(--buttonHover);
+}
+
+.SideBarList #active {
+  background-color: var(--buttonActive);
+}
+
+.sidebarIconDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

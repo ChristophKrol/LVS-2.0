@@ -1,0 +1,18 @@
+
+:root {
+    --white-background: #fafafa;
+    --content-panel: #e4e5f1;
+    --button: #484b6a;
+    --table-row-1: #d2d3db;
+    --table-row-2: #9394a5;
+  }
+  
+
+.regalSection{
+  padding: 1rem 1rem 1rem 1rem;
+    
+}
+
+.wrapper{
+  background-color: var(--white-background);
+}

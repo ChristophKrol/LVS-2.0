@@ -1,0 +1,89 @@
+
+:root {
+    --white-background: #fafafa;
+    --content-panel: #e4e5f1;
+    --button: #484b6a;
+    --table-row-1: #d2d3db;
+    --table-row-2: #9394a5;
+  }
+  
+
+
+h1{
+    
+}
+body{
+    background-color: #B6FFFA;
+}
+
+.main{
+    background-color: var(--white-background)!important;
+    
+    margin-right: 0;
+    padding: 0 0 0 0 ;
+    margin-left: 70px;
+   
+
+
+}
+
+.mainSection{
+    background-color: #fafafa !important;
+    padding: 0px 0px 0px 50px;
+}
+.dataWrapper{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #B6FFFA;
+}
+
+.lineChart{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 30px;
+}
+
+.lieferungenVerlauf{
+    width: 1200px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+
+}
+
+.categoriesImport{
+   margin: 0px 0px 0px 0px !important;
+   text-align: center;
+   height: 300px;
+   display: flex;
+   justify-content: center;
+
+
+}
+
+.lieferungenHeader{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.buttonDiv{
+    display: flex;
+    justify-content: center;
+    background-color: var(--white-background);
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+    
+}
+
+.buttonWrapper{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.kpiWrapper span{
+    margin-bottom: 100px;
+}

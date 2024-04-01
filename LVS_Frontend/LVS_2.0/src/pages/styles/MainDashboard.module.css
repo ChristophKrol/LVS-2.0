@@ -1,0 +1,114 @@
+
+:root {
+    --white-background: #fafafa;
+    --content-panel: #e4e5f1;
+    --button: #484b6a;
+    --table-row-1: #d2d3db;
+    --table-row-2: #9394a5;
+    
+  }
+
+
+
+header{
+    background-color: var(--content-panel);
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+
+}
+h1{
+    text-align: center;
+    margin: 0px 0px 0px 0px;
+    
+}
+
+span{
+    text-align: center;
+}
+
+.header{
+    display:flex;
+    justify-content: space-between;
+    gap: 1px;
+    padding-left: 75px;
+    padding-right: 75px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: var(--content-panel);
+    margin: 0px 0px 0px 0px;
+}
+
+.diagramDiv{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-left: 75px;
+    padding-right: 75px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: var(--white-background);
+}
+
+.ein_ausgaenge{
+    width: 1200px;
+    height: 400px;
+    text-align: center;
+
+}
+
+.lineChartContainer{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 30px;
+    background-color: var(--white-background);
+
+}
+
+.lineChart{
+    width: 1000px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    background-color: var(--white-background);
+
+
+}
+
+.pieChartContainer{
+    padding-top: 2rem;
+}
+
+
+
+.piechartDiv{
+    margin: 0px 0px 0px 0px !important;
+    text-align: center;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    background-color: var(--white-background);
+ 
+
+
+}
+
+.auslastungWert{
+    
+}
+
+
+.warenDaten{
+    padding-top: 1rem;
+    background-color: var(--white-background);
+}
+
+.warenGruppenRow{
+    padding-left: 75px;
+    padding-right: 75px;
+
+}
+
+.warenGruppenDiv{
+    width: 350px;
+    height:350px;
+}
