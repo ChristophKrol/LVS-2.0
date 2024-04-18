@@ -61,6 +61,7 @@ span{
     justify-content: center;
     padding-bottom: 30px;
     background-color: var(--white-background);
+   
 
 }
 
@@ -105,10 +106,31 @@ span{
 .warenGruppenRow{
     padding-left: 75px;
     padding-right: 75px;
+    padding-bottom: 1rem;
 
 }
 
 .warenGruppenDiv{
     width: 350px;
     height:350px;
+}
+
+.warenUebersicht{
+    padding-left: 75px;
+    padding-right: 75px;
+    background-color: var(--white-background);
+    padding-bottom: 1rem;
+}
+
+.tableFilter{
+    display: flex;
+    justify-content: flex-start;
+    gap: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.tableContainer{
+    max-height: 660px;
+    overflow-y: auto;
 }

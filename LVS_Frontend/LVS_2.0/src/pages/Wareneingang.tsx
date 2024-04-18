@@ -144,13 +144,17 @@ function Wareneingang(){
         const daysLabel = [];
         const last7DaysImportsData = [];
 
+        // fange bie jetzigem zeitpunkt an und subtrahiere dann pro 1 tag
         for (let dayCounter = 0; dayCounter < 7; dayCounter++) {
+          // jetziger Zeitpunkt
             let day = formatISO(subDays(new Date(), dayCounter), { representation: 'complete' }).slice(0, 19);
             let dayLabel = subDays(new Date(), dayCounter);
+            //füge tag in array hinzu
             days.unshift(day);
+            // füge tag-label in array hinzu
             daysLabel.unshift(dayLabel.toLocaleDateString('de-DE', { weekday: 'short' }));
         }
-
+        // tag vor 7 tagen
         days.unshift(formatISO(subDays(new Date(), 7), { representation: 'complete' }).slice(0, 19));
 
         setDaysLabels(daysLabel);
@@ -225,9 +229,9 @@ function Wareneingang(){
     return (
       <>
         <SidebarMenu/>
-        <div style={{padding: "0px 0px 0px 50px", backgroundColor: '#fafafa'}}>
+        <div style={{padding: "0px 0px 0px 100px", backgroundColor: '#fafafa'}}>
             <DashboardHeader title = "Wareneingang" kpiData = {dashboardData}/>
-            <Container style={{backgroundColor: '#fafafa'}}>
+            <Container style={{backgroundColor: '#fafafa', paddingLeft: '4rem'}}>
               <Row>
                 <Col className="text-center">
                   <h2>Lieferungen pro Woche</h2> 

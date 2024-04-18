@@ -37,9 +37,9 @@ const PopupForm = ({ onClose }) => {
     const [categories, setCategories] = useState([]);
     const [containerID, setContainerID] = useState('Regal auswählen');
     const [containers, setContainers] = useState([]);
-    
+    const [submitAvailable, enableSubmit] = useState(true);
   
-
+   
 
 
     
@@ -48,6 +48,8 @@ const PopupForm = ({ onClose }) => {
         onClose();
       }
     };
+
+
 
 
 
@@ -95,6 +97,21 @@ const PopupForm = ({ onClose }) => {
       setContainers(responseData.data.containers);
     })
   }, []);
+
+        //Submit Validation
+        useEffect(() =>{
+          if(name != '' && space != '' && price != '' && quantity != '' && category != 'Kategorie auswählen' && containerID != 'Regal auswählen'){
+            //Space darf nicht 0 sein
+            if(space == '0'){
+              //Space darf nicht 0 sein
+            }
+            if(quantity == '0'){
+              //Quantity darf nicht 0 sein 
+            }
+            enableSubmit(false);
+          }
+    
+        }, [name, quantity, space, price, category, containerID])
   
 
 
@@ -204,7 +221,7 @@ const PopupForm = ({ onClose }) => {
               </div>
             </Row>
             <footer className={styles.formFooter}>
-              <Button type="submit" onClick={handleClick}>Ware hinzufügen</Button>
+              <Button type="submit" onClick={handleClick} disabled={submitAvailable}>Ware hinzufügen</Button>
             </footer>
             
             

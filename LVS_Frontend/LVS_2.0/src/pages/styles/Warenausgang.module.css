@@ -18,10 +18,11 @@ body{
 
 .main{
     background-color: var(--white-background)!important;
+    width: 100%;
+
     
-    margin-right: 0;
     padding: 0 0 0 0 ;
-    margin-left: 70px;
+    
    
 
 
@@ -29,7 +30,9 @@ body{
 
 .mainSection{
     background-color: #fafafa !important;
-    padding: 0px 0px 0px 50px;
+    padding: 0px 0px 0px 0px;
+    margin-left: 100px;
+
 }
 .dataWrapper{
     display: flex;

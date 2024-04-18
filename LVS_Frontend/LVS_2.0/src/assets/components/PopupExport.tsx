@@ -6,11 +6,11 @@ import Button from 'react-bootstrap/Button';
 import styles from './styles/PopupForm.module.css';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
-import { Bounce, toast } from 'react-toastify';
+import { Bounce, toast, ToastContainer } from 'react-toastify';
 
 
 const notifySuccess = () => {
-  toast.success('Ware erfasst', {
+  toast.success('Ware exportiert', {
     position: "top-right",
     autoClose: 5000,
     hideProgressBar: true,
@@ -117,14 +117,12 @@ const PopupExport = ({ onClose }) => {
 
   const handleSubmit = async () => {
     for (const itemId of itemsToDelete) {
-      try {
+      
         await fetch(`http://localhost:8080/server/item/delete/${itemId}`, {
           method: 'DELETE'
         });
         console.log(`Item with ID ${itemId} deleted successfully.`);
-      } catch (error) {
-        console.error(`Failed to delete item with ID ${itemId}:`, error);
-      }
+     
     }
     notifySuccess();
     setTimeout(()=> {
@@ -141,6 +139,19 @@ const PopupExport = ({ onClose }) => {
       <div className={styles.backgroundDiv}
         onClick={handleOutsideClick}
       >
+        <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Bounce}
+        />
         <div className={styles.formDiv}>
           <div className={styles.closingButtonArea}> <IconButton onClick={onClose} aria-label="close"> <CloseIcon /> </IconButton> </div>
           <h2>Ware exportieren</h2>

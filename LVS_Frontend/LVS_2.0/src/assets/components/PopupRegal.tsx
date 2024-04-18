@@ -25,7 +25,7 @@ const PopupRegal = (props) => {
   const [maxCapacity, setMaxCapacity] = useState(0);
   const [curCapacity, setCurCapacity] = useState(0);
   const [utilization, setUtilization] = useState(0);
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState('');
 
   //Fetch ContainerData
   useEffect(() => {
@@ -42,9 +42,15 @@ const PopupRegal = (props) => {
     })
   }, []);
 
+  //Fetch itemValue
+  useEffect(() => {
+    fetch('http://localhost:8080/server/item/itemPrice/container/' + regalID)
+    .then(response => response.json())
+    .then(responseData => {setValue(responseData.data.sum.toFixed(2));})
+  }, []);
   // Load ItemCount per Category
   useEffect(() => {
-    fetch('http://localhost:8080/server/item/itemCountPerCategory/container/' + id)
+    fetch('http://localhost:8080/server/item/itemCountPerCategory/container/' + regalID)
     .then(response => response.json())
     .then(responseData => {setItemCount(responseData.data.catGroup); console.log(responseData.data.catGroup);});
   }, [])
@@ -84,13 +90,13 @@ const PopupRegal = (props) => {
                     <span className={styles.regalKPI}> <h4>Max. Kapazität</h4> <h4>{maxCapacity}</h4></span>
                     <span className={styles.regalKPI}> <h4>Genutzte Kapazität</h4> <h4>{curCapacity}</h4></span>
                     <span className={styles.regalKPI}> <h4>Auslastung</h4> <h4>{utilization}%</h4></span>
-                    <span className={styles.regalKPI}> <h4>Warenwert</h4> <h4>1000€</h4></span>
+                    <span className={styles.regalKPI}> <h4>Warenwert</h4> <h4>{value}€</h4></span>
                 </div>
 
             </div>
             <Col>
                 <div className={styles.categoriesImport}>
-                    <Pie data={categoryData} options={categoryOptions}></Pie>
+                <Pie data={categoryData} options={categoryOptions}></Pie>
                 </div>
             </Col>
           </Row>

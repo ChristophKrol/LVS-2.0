@@ -30,17 +30,24 @@ import { formatISO, subDays } from "date-fns";
 
 function Warenausgang(){
 
+  //KPIs
   const [totalExportsToday, setTotalExportsToday] = useState(0);
   const [totalExports, setTotalExports] = useState(0);
   const[weeklyExports, setWeeklyExports] = useState(0);
   const [totalExportValue, setTotalExportValue] = useState(0);
+
+  //PieCharts
   const[categoryValues, setCategoryValues] = useState([]);
   const[categoryExportCount, setCategoryExportCount] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  //LineChart
   const[daysLabels, setDaysLabels] = useState([]);
   const[last7Days, setLast7Days] = useState([]);
-  const[maxValue, setMaxValue] = useState(0);
+  const[maxValue, setMaxValue] = useState(0);   //Max value for linechart y-axis
   const [last7DaysExports, setLast7DaysExports] = useState([]);
-  const [categories, setCategories] = useState([]);
+
+  
 
   //fetch categories for colors
   useEffect(() => {
@@ -52,19 +59,26 @@ function Warenausgang(){
   }, []);
 
 
-  // total exports today
+  // total exports today 0:00:00 - 23:59:59
   useEffect(() => {
-    const currentTime = new Date();
+     // 0:00
+    const currentTime = new Date();    
     currentTime.setHours(0);
     currentTime.setMinutes(0);
     currentTime.setSeconds(0);
+    //Format Time
     const today0 = formatISO(currentTime, {representation: 'complete'}).slice(0,19);
+
+    // 23:59:59
     currentTime.setHours(23);
     currentTime.setMinutes(59);
     currentTime.setSeconds(59);
+    //Format Time
     const today1 = formatISO(currentTime, {representation: 'complete'}).slice(0,19);
-    console.log(today0);
-    console.log(today1);
+    //console.log(today0);
+    //console.log(today1);
+
+    // get data from 0:00 to 23:59
     fetch('http://localhost:8080/server/itemhistory/getExports/' + today0 + '/' + today1)
     .then(response => response.json())
     .then(responseData => {
@@ -72,7 +86,7 @@ function Warenausgang(){
     })
   }, [])
 
-  //total exports
+  //total exports (all time)
   useEffect(() => {
     fetch('http://localhost:8080/server/itemhistory/getExports')
     .then(response => response.json())
@@ -82,37 +96,47 @@ function Warenausgang(){
     })
   }, []);
 
-  // Export letzte 7 Tage
+  // Export last 7 days
   useEffect(() => {
+    // async: do for loop (7 days - loop) first
     const fetchData = async () => {
-        const days = [];
-        const daysLabel = [];
-        const last7DaysExportsData = [];
-  
+        const days = []; // days for each data: DateTime-Objects
+        const daysLabel = []; // labels for x-axis
+        const last7DaysExportsData = []; // linechart data
+
+        //Create daytime object for last 7 days
+        // get last 7 days from today
         for (let dayCounter = 0; dayCounter < 7; dayCounter++) {
-            let day = formatISO(subDays(new Date(), dayCounter), { representation: 'complete' }).slice(0, 19);
-            let dayLabel = subDays(new Date(), dayCounter);
-            days.unshift(day);
-            daysLabel.unshift(dayLabel.toLocaleDateString('de-DE', { weekday: 'short' }));
+            // subdays: Subtract 1 day from current day (Tue - 1 = Mon) --> do this 7 times
+            //start with - 0: today
+            let day = formatISO(subDays(new Date(), dayCounter), { representation: 'complete' }).slice(0, 19); //Format to req. DateTime
+            let dayLabel = subDays(new Date(), dayCounter); // create label for day
+            days.unshift(day); // push day into array
+            daysLabel.unshift(dayLabel.toLocaleDateString('de-DE', { weekday: 'short' })); //format label and push it into array
         }
-  
+        
+        // push today - 7 day into array
         days.unshift(formatISO(subDays(new Date(), 7), { representation: 'complete' }).slice(0, 19));
   
+        //set states
         setDaysLabels(daysLabel);
         setLast7Days(days);
-  
+        
+        //Get export data for each day 
         for (let i = 1; i < days.length; i++) {
-          let dayBefore = days[i - 1];
+          let dayBefore = days[i - 1]; //required for API-Call
           let dayAfter = days[i];
           const response = await fetch('http://localhost:8080/server/itemhistory/getExports/' + dayBefore + '/' + dayAfter);
-          const responseData = await response.json();
+          const responseData = await response.json(); // await to push into last7DaysExportsData and for-loop
           last7DaysExportsData.push(responseData.data.countAllExportedItems);
       }
+      
+      //set States
       setLast7DaysExports(last7DaysExportsData);
-      setMaxValue(Math.max(... last7DaysExportsData));
+      setMaxValue(Math.max(... last7DaysExportsData)); // maxValue for y-Axis -> Copy exportsArray and get Max
       };
   
-      fetchData();
+      fetchData(); // call async function
     }, []);
 
   //Export Value
@@ -126,7 +150,7 @@ function Warenausgang(){
 
 
 
-  //ExportValueOfCategories
+  //ExportValueOfCategories (for PieChart)
   useEffect(() => {
     fetch('http://localhost:8080/server/itemhistory/getExportValue/category')
     .then(response => response.json())
@@ -136,7 +160,7 @@ function Warenausgang(){
   }, []);
 
 
-  // Count Exports of categories
+  // Count Exports of categories (for PieChart)
   useEffect(() => {
     fetch('http://localhost:8080/server/itemhistory/getExports/category')
     .then(response => response.json())
@@ -145,7 +169,7 @@ function Warenausgang(){
     }})
   }, []);
 
-  //weekly Exports
+  //weekly Exports (KPI)
   useEffect(()=> {
     const currentTime = formatISO(new Date(), {representation:'complete'}).slice(0,19);
     const last7Day = formatISO(subDays(currentTime, 7), { representation: 'complete'}).slice(0,19);
@@ -159,7 +183,7 @@ function Warenausgang(){
 
 
 
-
+  //LineChart DAta
     const data = {
         labels: daysLabels,
         datasets: [{ 
@@ -172,6 +196,7 @@ function Warenausgang(){
         }]
     }
 
+    //LineChart Options
     const options = {
         plugins: {
           legend: true
@@ -179,7 +204,7 @@ function Warenausgang(){
         scales:{
           y: {
             min:0,
-            max:maxValue + 3
+            max:maxValue + 3 //MaxValue + 3 
           }
         }
     }
@@ -239,7 +264,7 @@ function Warenausgang(){
         <SidebarMenu/>
         <div className={styles.mainSection}>
             <DashboardHeader title = "Warenausgang" kpiData = {dashboardData}/>
-
+          <div style={{display:'flex', justifyContent: 'center'}}>
             <Container className={styles.main}>
               <Row>
                 <Col className="text-center">
@@ -267,7 +292,7 @@ function Warenausgang(){
                 </Col>
               </Row> 
               </Container>
-                
+            </div>    
 
             <div className={styles.buttonDiv}>
                         <span className={styles.buttonWrapper}>

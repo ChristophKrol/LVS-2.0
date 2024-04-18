@@ -38,10 +38,10 @@ function MainDashboard(){
   const[last7Days, setLast7Days] = useState([]);
   const[daysLabels, setDaysLabels] = useState([]);
   const[maxValue, setMaxValue] = useState(0);
-
   const[last7DaysImports, setLast7DaysImports] = useState([]);
   const [last7DaysExports, setLast7DaysExports] = useState([]);
 
+  //PieCharts
   const [containers, setContainers]=  useState([]);
   const [capacityTotal, setCapacityTotal] = useState(0);
   const [curCapacity, setCurCapacity] = useState(0);
@@ -51,9 +51,16 @@ function MainDashboard(){
   const [categoryValues, setCategoryValues] = useState([]);
   const [itemCount, setItemCount] = useState(0);
   
+  //KPI
   const[importsCount, setImportsCount] = useState(0);
   const[exportsCount, setExportsCount] = useState(0);
   const[totalItemValue, setTotalItemValue] = useState(0);
+
+  // Item overview
+  const[itemData, setItemData] = useState([]);
+  //Item overview - Filter Data
+  const[chosenCategory, setChosenCategory] = useState(0);
+  const[chosenRegal, setChosenRegal] = useState(0);
 
   //Get category Value
   useEffect(() => {
@@ -112,8 +119,10 @@ function MainDashboard(){
     .then((responseData) => {
         const containerData = responseData.data.containers;
       setContainers(containerData);
+      // sum totalCapacity of all containers 
       const totalCapacity = containerData.reduce((accumulator, container) => accumulator + container.maxCapacity, 0);
       setCapacityTotal(totalCapacity);
+      //sum usedCapacity of all Containers
       const usedCapacity = containerData.reduce((accumulator, container) => accumulator + container.curCapacity, 0);
       setCurCapacity(usedCapacity);
       setUtilization(usedCapacity/totalCapacity * 100); 
@@ -207,6 +216,49 @@ useEffect(() => {
       setCategories(responseData.data.categories);
     })
   }, []);
+
+  // Load item overview data
+  useEffect(() => {
+    // Fetch All ItemData
+    if(chosenCategory == 0 && chosenRegal == 0){
+      fetch("http://localhost:8080/server/item/list/grouped")
+      .then(response => response.json())
+      .then((responseData) => {
+        setItemData(responseData.data.items);
+      });
+
+    }
+    // Fetch ItemData by Category
+    else if(chosenCategory != 0 && chosenRegal == 0){
+      fetch('http://localhost:8080/server/item/list/grouped/category/' + chosenCategory)
+      .then(response => response.json())
+      .then((responseData) => {
+        setItemData(responseData.data.items);
+      });
+    }
+    // Fetch ItemData by Container
+    else if(chosenCategory == 0 && chosenRegal != 0){
+      fetch('http://localhost:8080/server/item/list/grouped/container/' + chosenRegal)
+      .then(response => response.json())
+      .then((responseData) => {
+        setItemData(responseData.data.items);
+      });
+    }
+    // Fetch ItemData by Both
+    else{
+      fetch('http://localhost:8080/server/item/list/grouped/container/' + chosenRegal +'/category/' + chosenCategory)
+      .then(response => response.json())
+      .then((responseData) => {
+        setItemData(responseData.data.items);
+      });
+    }
+
+  }, [chosenCategory, chosenRegal]);
+
+  
+
+  
+  
 
 
 
@@ -302,7 +354,7 @@ useEffect(() => {
 
   return(
     <div style={{padding: "0px 0px 0px 50px"}} >
-      <DashboardHeader title="Dashboard" kpiData={main}/>
+      <DashboardHeader title="Dashboard" kpiData={main}/> 
       
       <div className={styles.diagramDiv}>
 
@@ -310,7 +362,7 @@ useEffect(() => {
           <span>
             <h2>Ein- und Ausgänge</h2>
           </span>
-          <Container fluid className={styles.lineChartContainer}>
+          <Container fluid className={styles.lineChartContainer}> 
             <div className={styles.lineChart}>
               <Line data = {data} options ={options}></Line>
             </div>  
@@ -351,6 +403,60 @@ useEffect(() => {
           </Row>
         </Container>
 
+      </section>
+      <section className={styles.warenUebersicht}>
+        <h1>Warenübersicht</h1>
+        <div className={styles.tableFilter}>
+            <select className='select' onChange={(e)=>{
+              const category = e.target.value;
+              setChosenCategory(category);
+            }}
+            >
+              <option value="0">Kategorie auswählen</option>
+              {categories.map(category =>(
+                <option value={category.id}>{category.name}</option>
+              ))}
+            </select>
+
+            <select className='select' onChange={(e) =>{
+              const regal = e.target.value;
+              setChosenRegal(regal);
+            }}
+            >
+               <option value="0">Alle</option>
+                  {containers.map(regal =>(
+                    <option value={regal.id}>{regal.name}</option>
+                  ))}
+            </select>
+
+          </div>
+        <div className={styles.tableContainer}>
+          <table className="table table-striped table-hover table-bordered" id="table-panel">
+              <thead>
+                <tr>
+                  <th> Name </th>
+                  <th> Größe </th>
+                  <th> Preis </th>
+                  <th> Kategorie </th>
+                  <th> Regal ID </th>
+                  <th> Anzahl </th>
+                </tr>
+              </thead>
+              <tbody>
+                { itemData.map(data =>(
+                  <tr>
+                    <th> {data.name} </th>
+                    <th> {data.space} </th>
+                    <th> {data.price} </th>
+                    <th> {data.category} </th>
+                    <th> {data.container_id} </th>
+                    <th> {data.itemCount} </th>
+                  </tr>
+                )) }
+
+              </tbody>
+          </table>
+        </div>        
       </section>
 
       <Footer/>

@@ -76,7 +76,7 @@ function Lagerflaechen(){
                 <main className={styles.regalSection}>
                     <Row className='g-4 justify-content-center'>
                         { containers.map(container =>(
-                            <Col>
+                            <Col style={{display: "flex", justifyContent:"center"}}>
                                 <Card style={{ width: '18rem', padding: '0 0 0 0 ' }}>
                                 <Card.Header as="h5" className="text-center">{container.name}</Card.Header>
                                     <Card.Body className="text-center">
@@ -96,7 +96,7 @@ function Lagerflaechen(){
                     
                     
                 </main>
-                <Container fluid style={{display: 'flex',justifyContent: 'center'}}>
+                <Container fluid style={{display: 'flex',justifyContent: 'center', paddingBottom: '1rem'}}>
                     <Button variant="primary" onClick={openCreateRegalPopup}> Lagerfläche hinzufügen </Button>
                     {isCreateRegalOpen && <PopupCreateRegal onClose={closeCreateRegalPopup} />}
                 </Container>
